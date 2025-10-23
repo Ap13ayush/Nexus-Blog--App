@@ -26,6 +26,16 @@ Industry-grade test automation suite using Cypress (JavaScript), covering UI jou
 - API: npm run test:api
 - BDD: npm run test:bdd
 - Reports: npm run report:merge && npm run report:generate
+- Lint/Format: npm run lint && npm run format
+
+## Module Structure
+- cypress/modules/core: shared Cypress commands (API login/create/delete, JWT helpers)
+- cypress/modules/ui: Page Objects for Conduit SPA
+- cypress/modules/api: API client helpers (login/register/articles)
+- cypress/modules/auth: UI auth helpers
+
+## CI
+- GitHub Actions workflow runs UI+API suites on PR/push and publishes Mochawesome report artifacts.
 
 ## Env
 - baseUrl: https://react-redux.realworld.io

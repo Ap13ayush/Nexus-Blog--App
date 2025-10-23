@@ -1,3 +1,4 @@
+import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
 import { HomePage, ArticlePage } from '../../../modules/ui/pages';
 
 const home = new HomePage();

@@ -1,0 +1,18 @@
+{
+  "root": true,
+  "env": {
+    "es2021": true,
+    "node": true,
+    "cypress/globals": true
+  },
+  "extends": ["eslint:recommended", "plugin:cypress/recommended"],
+  "plugins": ["cypress"],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
+  },
+  "ignorePatterns": ["cypress/reports/**", "cypress/videos/**", "cypress/screenshots/**", "node_modules/**"]
+}

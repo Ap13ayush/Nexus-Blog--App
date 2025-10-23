@@ -1,6 +1,7 @@
 const { defineConfig } = require('cypress');
-const createEsbuildPlugin = require('@bahmutov/cypress-esbuild-preprocessor');
-const cucumber = require('@badeball/cypress-cucumber-preprocessor');
+const createBundler = require('@bahmutov/cypress-esbuild-preprocessor');
+const { addCucumberPreprocessorPlugin } = require('@badeball/cypress-cucumber-preprocessor');
+const { createEsbuildPlugin } = require('@badeball/cypress-cucumber-preprocessor/esbuild');
 
 module.exports = defineConfig({
   e2e: {
@@ -11,12 +12,14 @@ module.exports = defineConfig({
     env: {
       apiBaseUrl: 'https://api.realworld.io/api'
     },
-    setupNodeEvents(on, config) {
+    async setupNodeEvents(on, config) {
       // mochawesome reporter
       require('cypress-mochawesome-reporter/plugin')(on);
       // cucumber preprocessor
-      cucumber.addCucumberPreprocessorPlugin(on, config);
-      on('file:preprocessor', createEsbuildPlugin());
+      await addCucumberPreprocessorPlugin(on, config);
+      on('file:preprocessor', createBundler({
+        plugins: [createEsbuildPlugin(config)],
+      }));
       return config;
     }
   },
