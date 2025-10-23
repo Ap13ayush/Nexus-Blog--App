@@ -1,6 +1,6 @@
 // Simple Page Objects for Conduit (module: ui)
 export class Header {
-  profile() { return cy.get('a.nav-link').contains('@'); }
+  profileByUsername(username) { return cy.get('a.nav-link').contains(username); }
   signIn() { return cy.get('a.nav-link').contains('Sign in'); }
   signUp() { return cy.get('a.nav-link').contains('Sign up'); }
   newArticle() { return cy.get('a.nav-link').contains('New Article'); }
@@ -19,7 +19,7 @@ export class LoginPage {
   visit() { cy.visit('/#/login'); }
   email() { return cy.get('input[type="email"]'); }
   password() { return cy.get('input[type="password"]'); }
-  submit() { return cy.get('button[type="submit"]').contains('Sign in'); }
+  submit() { return cy.get('button[type="submit"]'); }
 }
 
 export class RegistrationPage {
@@ -27,7 +27,7 @@ export class RegistrationPage {
   username() { return cy.get('input[placeholder="Username"]'); }
   email() { return cy.get('input[placeholder="Email"]'); }
   password() { return cy.get('input[placeholder="Password"]'); }
-  submit() { return cy.get('button[type="submit"]').contains('Sign up'); }
+  submit() { return cy.get('button[type="submit"]'); }
 }
 
 export class ArticleEditorPage {

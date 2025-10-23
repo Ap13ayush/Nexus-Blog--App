@@ -8,8 +8,8 @@ describe('Mark and Verify Favorite Article (stubbed API)', () => {
 
   it('testMarkAndVerifyFavoriteArticle', () => {
     const user = makeUser();
-    cy.visit('/');
     stubSession(user);
+    cy.visit('/');
 
     // Seed global feed with one article
     const slug = 'hello-world-123';
@@ -37,7 +37,7 @@ describe('Mark and Verify Favorite Article (stubbed API)', () => {
 
     // Favorited tab should list it
     stubFavoritedArticles(user.username, [updated]);
-    cy.get('a.nav-link').contains('@').click({ force: true });
+    cy.get('a.nav-link').contains(user.username).click({ force: true });
     profile.favoritedTab().click();
     profile.articleList().contains('Hello World').should('be.visible');
   });

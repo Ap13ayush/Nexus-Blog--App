@@ -8,8 +8,8 @@ describe('Add and Delete Comment (stubbed API)', () => {
 
   it('testAddAndDeleteComment', () => {
     const user = makeUser();
-    cy.visit('/');
     stubSession(user);
+    cy.visit('/');
 
     // Seed feed with one article and stub its details/comments
     const slug = 'hello-world-123';

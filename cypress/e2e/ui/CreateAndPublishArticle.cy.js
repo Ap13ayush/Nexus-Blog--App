@@ -9,8 +9,8 @@ describe('Create and Publish Article (stubbed API)', () => {
 
   it('testCreateAndPublishArticle', () => {
     const user = makeUser();
-    cy.visit('/');
     stubSession(user);
+    cy.visit('/');
 
     const ts = Date.now();
     const title = `Nexus Title ${ts}`;
@@ -43,7 +43,9 @@ describe('Create and Publish Article (stubbed API)', () => {
     };
     stubProfileArticles(user, [articleResp]);
 
-    cy.get('a.nav-link').contains('@').click({ force: true });
+    const headerUsername = user.username;
+    // Go to profile
+    cy.get('a.nav-link').contains(headerUsername).click({ force: true });
     profile.myArticlesTab().click();
     profile.articleList().contains(title).should('be.visible');
   });

@@ -89,22 +89,22 @@ export function stubFavoritedArticles(username, articles){
   }).as('getFavoritedArticles');
 }
 
-export function stubArticleDetailsAndComments(slug, article, comments){
+export function stubArticleDetailsAndComments(slug, article, initialComments){
+  let comments = initialComments.slice();
   cy.intercept('GET', `**/api/articles/${slug}`, { statusCode: 200, body: { article } }).as('getArticle');
-  cy.intercept('GET', `**/api/articles/${slug}/comments`, { statusCode: 200, body: { comments } }).as('getComments');
+  cy.intercept('GET', `**/api/articles/${slug}/comments`, (req) => {
+    req.reply({ statusCode: 200, body: { comments } });
+  }).as('getComments');
   cy.intercept('POST', `**/api/articles/${slug}/comments`, (req) => {
     const text = req.body.comment.body;
     const newComment = { id: Math.floor(Math.random()*100000), createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), body: text, author: { username: article.author.username, image: article.author.image, following:false, bio:null } };
     comments = [...comments, newComment];
     req.reply({ statusCode: 200, body: { comment: newComment } });
-    // refresh list
-    cy.intercept('GET', `**/api/articles/${slug}/comments`, { statusCode: 200, body: { comments } });
   }).as('postComment');
   cy.intercept('DELETE', `**/api/articles/${slug}/comments/*`, (req) => {
     const idStr = req.url.split('/').pop();
     const id = Number(idStr);
     comments = comments.filter(c => c.id !== id);
     req.reply({ statusCode: 200, body: {} });
-    cy.intercept('GET', `**/api/articles/${slug}/comments`, { statusCode: 200, body: { comments } });
   }).as('deleteComment');
 }
