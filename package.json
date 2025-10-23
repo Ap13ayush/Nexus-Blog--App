@@ -9,7 +9,7 @@
     "test:ui": "cypress run --spec 'cypress/e2e/ui/**/*.cy.js'",
     "test:api": "cypress run --spec 'cypress/e2e/api/**/*.cy.js'",
     "test:bdd": "cypress run --spec 'cypress/e2e/bdd/**/*.feature'",
-    "report:merge": "npx mochawesome-merge cypress/reports/*.json > cypress/reports/mochawesome.json",
+    "report:merge": "npx mochawesome-merge cypress/reports/.jsons/*.json > cypress/reports/mochawesome.json",
     "report:generate": "npx marge cypress/reports/mochawesome.json -f index -o cypress/reports/html",
     "report:extent": "node scripts/generate-extent.js",
     "lint": "eslint . --ext .js",
@@ -33,5 +33,16 @@
   "bugs": {
     "url": "https://github.com/Ap13ayush/Nexus-Blog--App/issues"
   },
-  "homepage": "https://github.com/Ap13ayush/Nexus-Blog--App#readme"
+  "homepage": "https://github.com/Ap13ayush/Nexus-Blog--App#readme",
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.6",
+    "cypress": "^13.17.0",
+    "cypress-mochawesome-reporter": "^4.0.2",
+    "esbuild": "^0.25.11",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.0.0",
+    "mochawesome-report-generator": "^6.3.0",
+    "rimraf": "^6.0.1"
+  }
 }

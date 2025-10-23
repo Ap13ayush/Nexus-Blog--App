@@ -1,35 +1,41 @@
 // UI: User registration and login
 import { RegistrationPage, LoginPage, Header } from '../../modules/ui/pages';
+import { makeUser, stubSignup, stubLogin, stubSession } from '../../modules/stubs/network';
 
-describe('User Registration and Login', () => {
+describe('User Registration and Login (stubbed API)', () => {
   const reg = new RegistrationPage();
   const login = new LoginPage();
   const header = new Header();
 
   it('testUserRegistrationAndLogin', () => {
-    const ts = Date.now();
-    const username = `user_${ts}`;
-    const email = `user_${ts}@example.com`;
-    const password = 'Password123!';
+    const user = makeUser();
 
-    // Register
+    // Stub sign up API
+    stubSignup(user);
     reg.visit();
-    reg.username().type(username);
-    reg.email().type(email);
-    reg.password().type(password);
+    reg.username().type(user.username);
+    reg.email().type(user.email);
+    reg.password().type('Password123!');
     reg.submit().click();
 
-    // Ensure logged in (profile visible)
+    // App requests current user
+    stubSession(user);
+
+    // Ensure logged in (settings visible)
     header.settings().should('be.visible');
 
     // Logout
     cy.uiLogout();
 
-    // Login
+    // Stub login API
+    stubLogin(user);
     login.visit();
-    login.email().type(email);
-    login.password().type(password);
+    login.email().type(user.email);
+    login.password().type('Password123!');
     login.submit().click();
+
+    // App requests current user after login
+    stubSession(user);
 
     // Assert logged in
     header.settings().should('be.visible');

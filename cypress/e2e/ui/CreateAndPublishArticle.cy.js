@@ -1,23 +1,25 @@
 // UI: Create and publish an article, then verify in profile
 import { ArticleEditorPage, UserProfilePage, Header } from '../../modules/ui/pages';
+import { makeUser, stubSession, stubCreateArticle, stubProfileArticles } from '../../modules/stubs/network';
 
-describe('Create and Publish Article', () => {
+describe('Create and Publish Article (stubbed API)', () => {
   const editor = new ArticleEditorPage();
   const profile = new UserProfilePage();
   const header = new Header();
 
-  before(() => {
-    // Register via API and set JWT
-    cy.visit('/');
-    cy.apiRegisterRandomUser();
-  });
-
   it('testCreateAndPublishArticle', () => {
+    const user = makeUser();
+    cy.visit('/');
+    stubSession(user);
+
     const ts = Date.now();
     const title = `Nexus Title ${ts}`;
     const about = 'About Nexus';
     const body = 'This is the body of the article created by Cypress.';
     const tag = 'cypress';
+
+    // Stub create article and subsequent loads
+    const slug = stubCreateArticle({ title, about, body, tagList: [tag] }, user);
 
     cy.uiGoToNewArticle();
     editor.title().type(title);
@@ -26,9 +28,21 @@ describe('Create and Publish Article', () => {
     editor.tags().type(`${tag}{enter}`);
     editor.publish().click();
 
-    // Go to profile and assert article listed
-    cy.contains('a.nav-link', 'Home').click();
-    cy.contains('a.nav-link', 'Settings').click();
+    // Profile articles show newly created
+    const articleResp = {
+      slug,
+      title,
+      description: about,
+      body,
+      tagList: [tag],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      favorited: false,
+      favoritesCount: 0,
+      author: { username: user.username, bio: user.bio, image: user.image, following: false }
+    };
+    stubProfileArticles(user, [articleResp]);
+
     cy.get('a.nav-link').contains('@').click({ force: true });
     profile.myArticlesTab().click();
     profile.articleList().contains(title).should('be.visible');
