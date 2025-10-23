@@ -1,16 +1,30 @@
 {
   "name": "nexus-blog--app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Unified Cypress E2E + API + BDD test automation for RealWorld Conduit",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "cypress install || true",
+    "cypress:open": "cypress open",
+    "test:ui": "cypress run --spec 'cypress/e2e/ui/**/*.cy.js'",
+    "test:api": "cypress run --spec 'cypress/e2e/api/**/*.cy.js'",
+    "test:bdd": "cypress run --spec 'cypress/e2e/bdd/**/*.feature'",
+    "report:merge": "npx mochawesome-merge cypress/reports/*.json > cypress/reports/mochawesome.json",
+    "report:generate": "npx marge cypress/reports/mochawesome.json -f index -o cypress/reports/html",
+    "clean": "rimraf node_modules cypress/reports cypress/screenshots cypress/videos"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Ap13ayush/Nexus-Blog--App.git"
   },
-  "keywords": [],
+  "keywords": [
+    "cypress",
+    "bdd",
+    "mochawesome",
+    "realworld",
+    "conduit",
+    "api-testing"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
