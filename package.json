@@ -11,6 +11,7 @@
     "test:bdd": "cypress run --spec 'cypress/e2e/bdd/**/*.feature'",
     "report:merge": "npx mochawesome-merge cypress/reports/*.json > cypress/reports/mochawesome.json",
     "report:generate": "npx marge cypress/reports/mochawesome.json -f index -o cypress/reports/html",
+    "report:extent": "node scripts/generate-extent.js",
     "lint": "eslint . --ext .js",
     "format": "prettier -w .",
     "clean": "rimraf node_modules cypress/reports cypress/screenshots cypress/videos"

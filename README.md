@@ -25,7 +25,8 @@ Industry-grade test automation suite using Cypress (JavaScript), covering UI jou
 - UI: npm run test:ui
 - API: npm run test:api
 - BDD: npm run test:bdd
-- Reports: npm run report:merge && npm run report:generate
+- Reports (Mochawesome): npm run report:merge && npm run report:generate
+- Reports (Extent): npm run report:merge && npm run report:extent  # requires: npm i -D extent-reports
 - Lint/Format: npm run lint && npm run format
 
 ## Module Structure
