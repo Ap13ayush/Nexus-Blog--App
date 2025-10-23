@@ -1,5 +1,5 @@
 // UI: Create and publish an article, then verify in profile
-import { ArticleEditorPage, UserProfilePage, Header } from '../../pages/pages';
+import { ArticleEditorPage, UserProfilePage, Header } from '../../modules/ui/pages';
 
 describe('Create and Publish Article', () => {
   const editor = new ArticleEditorPage();

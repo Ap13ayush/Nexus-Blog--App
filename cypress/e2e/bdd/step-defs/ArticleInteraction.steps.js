@@ -1,4 +1,4 @@
-import { HomePage, ArticlePage } from '../../../pages/pages';
+import { HomePage, ArticlePage } from '../../../modules/ui/pages';
 
 const home = new HomePage();
 const page = new ArticlePage();

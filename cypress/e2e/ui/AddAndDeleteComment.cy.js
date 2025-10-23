@@ -1,5 +1,5 @@
 // UI: Add and delete a comment on an article
-import { HomePage, ArticlePage } from '../../pages/pages';
+import { HomePage, ArticlePage } from '../../modules/ui/pages';
 
 describe('Add and Delete Comment', () => {
   const home = new HomePage();

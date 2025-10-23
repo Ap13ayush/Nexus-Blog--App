@@ -1,5 +1,5 @@
 // UI: Favorite an article and verify in Favorited tab
-import { HomePage, UserProfilePage } from '../../pages/pages';
+import { HomePage, UserProfilePage } from '../../modules/ui/pages';
 
 describe('Mark and Verify Favorite Article', () => {
   const home = new HomePage();

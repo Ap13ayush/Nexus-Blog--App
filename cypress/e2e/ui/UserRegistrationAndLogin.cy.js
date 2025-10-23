@@ -1,5 +1,5 @@
 // UI: User registration and login
-import { RegistrationPage, LoginPage, Header } from '../../pages/pages';
+import { RegistrationPage, LoginPage, Header } from '../../modules/ui/pages';
 
 describe('User Registration and Login', () => {
   const reg = new RegistrationPage();
