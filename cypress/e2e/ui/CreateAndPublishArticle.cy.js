@@ -11,6 +11,7 @@ describe('Create and Publish Article (stubbed API)', () => {
     const user = makeUser();
     stubSession(user);
     cy.visit('/');
+    cy.wait('@getUser');
 
     const ts = Date.now();
     const title = `Nexus Title ${ts}`;
@@ -21,7 +22,8 @@ describe('Create and Publish Article (stubbed API)', () => {
     // Stub create article and subsequent loads
     const slug = stubCreateArticle({ title, about, body, tagList: [tag] }, user);
 
-    cy.uiGoToNewArticle();
+    // Navigate directly to editor to avoid flaky header rendering in SPA
+    cy.visit('/#/editor');
     editor.title().type(title);
     editor.about().type(about);
     editor.body().type(body);

@@ -1,6 +1,6 @@
 // UI: Favorite an article and verify in Favorited tab
 import { HomePage, UserProfilePage } from '../../modules/ui/pages';
-import { makeUser, stubSession, stubFeed, stubFavorite, stubFavoritedArticles } from '../../modules/stubs/network';
+import { makeUser, stubSession, stubFeed, stubFavorite, stubFavoritedArticles, stubProfileArticles, stubProfile } from '../../modules/stubs/network';
 
 describe('Mark and Verify Favorite Article (stubbed API)', () => {
   const home = new HomePage();
@@ -10,6 +10,7 @@ describe('Mark and Verify Favorite Article (stubbed API)', () => {
     const user = makeUser();
     stubSession(user);
     cy.visit('/');
+    cy.wait('@getUser');
 
     // Seed global feed with one article
     const slug = 'hello-world-123';
@@ -37,6 +38,9 @@ describe('Mark and Verify Favorite Article (stubbed API)', () => {
 
     // Favorited tab should list it
     stubFavoritedArticles(user.username, [updated]);
+    // Also stub My Articles (empty) to render tabs without network
+    stubProfileArticles(user, []);
+    stubProfile(user);
     cy.get('a.nav-link').contains(user.username).click({ force: true });
     profile.favoritedTab().click();
     profile.articleList().contains('Hello World').should('be.visible');

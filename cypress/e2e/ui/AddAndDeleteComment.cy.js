@@ -10,6 +10,7 @@ describe('Add and Delete Comment (stubbed API)', () => {
     const user = makeUser();
     stubSession(user);
     cy.visit('/');
+    cy.wait('@getUser');
 
     // Seed feed with one article and stub its details/comments
     const slug = 'hello-world-123';
@@ -35,10 +36,12 @@ describe('Add and Delete Comment (stubbed API)', () => {
     const text = `Great write-up! ${Date.now()}`;
     page.commentTextarea().type(text);
     page.postComment().click();
+    cy.wait('@postComment');
     page.comments().contains(text).should('be.visible');
 
-    // Delete the comment (first one)
-    page.deleteCommentButtons().first().click({ force: true });
-    page.comments().contains(text).should('not.exist');
+    // Delete the comment that matches text (click trash icon)
+    cy.contains('.card', text).find('i.ion-trash-a').click({ force: true });
+    cy.wait('@deleteComment');
+    cy.contains('.card .card-text', text).should('not.exist');
   });
 });
