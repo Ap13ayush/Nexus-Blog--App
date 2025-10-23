@@ -5,6 +5,9 @@ node_modules/
 cypress/screenshots/
 cypress/videos/
 cypress/reports/
+# allow committing sample HTML reports
+!cypress/reports/html/**
+!cypress/reports/extent/**
 
 # Logs and caches
 npm-debug.log*

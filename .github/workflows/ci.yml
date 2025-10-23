@@ -33,6 +33,7 @@ jobs:
           spec: |
             cypress/e2e/ui/**/*.cy.js
             cypress/e2e/api/**/*.cy.js
+            cypress/e2e/bdd/**/*.feature
 
       - name: Merge Mochawesome JSON
         run: |
