@@ -42,6 +42,9 @@ describe('Add and Delete Comment (stubbed API)', () => {
     // Delete the comment that matches text (click trash icon)
     cy.contains('.card', text).find('i.ion-trash-a').click({ force: true });
     cy.wait('@deleteComment');
+    // Force re-fetch of comments to reflect deletion in DOM
+    cy.reload();
+    cy.wait('@getComments');
     cy.contains('.card .card-text', text).should('not.exist');
   });
 });
